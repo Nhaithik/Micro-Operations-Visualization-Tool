@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Micro-Operations Visualization Tool</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Micro-Operations Visualization Tool</h1>
+        <p>Visualizing Basic Register Micro-Operations</p>
+    </header>
+
+
+    <main>
+
+        <!-- Register Input Section -->
+        <section class="register-section">
+
+            <h2>Register Values</h2>
+
+            <div class="register-container">
+
+                <div class="register-box">
+                    <label for="r1">Register R1</label>
+                    <input type="number" id="r1" placeholder="Enter value">
+                </div>
+
+                <div class="register-box">
+                    <label for="r2">Register R2</label>
+                    <input type="number" id="r2" placeholder="Enter value">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Operations Section -->
+        <section class="operations-section">
+
+            <h2>Select Micro-Operation</h2>
+
+            <div class="button-container">
+
+                <button onclick="loadRegister()">LOAD</button>
+                <button onclick="clearRegister()">CLEAR</button>
+                <button onclick="incrementRegister()">INCREMENT</button>
+                <button onclick="shiftLeft()">SHIFT LEFT</button>
+                <button onclick="shiftRight()">SHIFT RIGHT</button>
+                <button onclick="addRegisters()">ADD</button>
+                <button onclick="subtractRegisters()">SUBTRACT</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Output Section -->
+        <section class="output-section">
+
+            <h2>Operation Result</h2>
+
+            <div class="result-box">
+
+                <h3 id="operation-name">
+                    Select an operation
+                </h3>
+
+                <div class="before-result">
+
+                    <h3>Before Operation</h3>
+
+                    <p id="before-r1">R1 = --</p>
+                    <p id="before-r2">R2 = --</p>
+
+                </div>
+
+
+                <div class="after-result">
+
+                    <h3>After Operation</h3>
+
+                    <p id="after-r1">R1 = --</p>
+                    <p id="after-r2">R2 = --</p>
+                    <p id="result">Result = --</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>Computer Organization and Architecture Assignment</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
