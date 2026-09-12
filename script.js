@@ -157,15 +157,38 @@ function addRegisters() {
 // SUBTRACT OPERATION
 function subtractRegisters() {
 
-    let r1 = getR1();
-    let r2 = getR2();
+    let r1 = parseInt(document.getElementById("r1").value);
+    let r2 = parseInt(document.getElementById("r2").value);
 
-    displayBefore(r1, r2);
+    // Store values before operation
+    let beforeR1 = r1;
+    let beforeR2 = r2;
 
-    document.getElementById("operation-name").textContent =
+    // Perform subtraction
+    let result = r1 - r2;
+
+    // Convert result to 8-bit binary using two's complement
+    let binaryResult = (result & 255).toString(2).padStart(8, "0");
+
+    // Display operation name
+    document.getElementById("operation-name").innerText =
         "SUBTRACT Operation";
 
-    let result = (r1 - r2) & 255;
+    // Display values before operation
+    document.getElementById("before-r1").innerText =
+        `R1 = ${beforeR1.toString(2).padStart(8, "0")} (${beforeR1})`;
 
-    displayAfter(r1, r2, result);
+    document.getElementById("before-r2").innerText =
+        `R2 = ${beforeR2.toString(2).padStart(8, "0")} (${beforeR2})`;
+
+    // Display values after operation
+    document.getElementById("after-r1").innerText =
+        `R1 = ${r1.toString(2).padStart(8, "0")} (${r1})`;
+
+    document.getElementById("after-r2").innerText =
+        `R2 = ${r2.toString(2).padStart(8, "0")} (${r2})`;
+
+    // Display correct signed decimal result
+    document.getElementById("result").innerText =
+        `Result = ${binaryResult} (${result})`;
 }
