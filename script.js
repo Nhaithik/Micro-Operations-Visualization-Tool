@@ -1,5 +1,10 @@
 // Micro-Operations Visualization Tool
-// Get values from input boxes
+
+
+// ================================
+// GET REGISTER VALUES
+// ================================
+
 function getR1() {
     return parseInt(document.getElementById("r1").value) || 0;
 }
@@ -9,13 +14,19 @@ function getR2() {
 }
 
 
-// Convert decimal number to 8-bit binary
+// ================================
+// CONVERT TO 8-BIT BINARY
+// ================================
+
 function toBinary(number) {
     return (number & 255).toString(2).padStart(8, "0");
 }
 
 
-// Display values before operation
+// ================================
+// DISPLAY VALUES BEFORE OPERATION
+// ================================
+
 function displayBefore(r1, r2) {
 
     document.getElementById("before-r1").textContent =
@@ -26,7 +37,10 @@ function displayBefore(r1, r2) {
 }
 
 
-// Display values after operation
+// ================================
+// DISPLAY VALUES AFTER OPERATION
+// ================================
+
 function displayAfter(r1, r2, result) {
 
     document.getElementById("after-r1").textContent =
@@ -40,27 +54,35 @@ function displayAfter(r1, r2, result) {
 }
 
 
+// ================================
 // LOAD OPERATION
+// R1 ← R2
+// ================================
+
 function loadRegister() {
 
     let r1 = getR1();
     let r2 = getR2();
 
+    // Display original values
     displayBefore(r1, r2);
 
     document.getElementById("operation-name").textContent =
         "LOAD Operation";
 
-    // Load R2 value into R1
-    r1 = r2;
+    // Copy R2 into a temporary new R1
+    let newR1 = r2;
 
-    document.getElementById("r1").value = r1;
-
-    displayAfter(r1, r2, r1);
+    // Display result without changing input boxes
+    displayAfter(newR1, r2, newR1);
 }
 
 
+// ================================
 // CLEAR OPERATION
+// R1 ← 0
+// ================================
+
 function clearRegister() {
 
     let r1 = getR1();
@@ -71,16 +93,19 @@ function clearRegister() {
     document.getElementById("operation-name").textContent =
         "CLEAR Operation";
 
-    // Clear R1
-    r1 = 0;
+    // Clear temporary R1
+    let newR1 = 0;
 
-    document.getElementById("r1").value = r1;
-
-    displayAfter(r1, r2, r1);
+    // Input R1 remains unchanged
+    displayAfter(newR1, r2, newR1);
 }
 
 
+// ================================
 // INCREMENT OPERATION
+// R1 ← R1 + 1
+// ================================
+
 function incrementRegister() {
 
     let r1 = getR1();
@@ -91,15 +116,19 @@ function incrementRegister() {
     document.getElementById("operation-name").textContent =
         "INCREMENT Operation";
 
-    r1 = (r1 + 1) & 255;
+    // Increment R1
+    let newR1 = (r1 + 1) & 255;
 
-    document.getElementById("r1").value = r1;
-
-    displayAfter(r1, r2, r1);
+    // Input R1 remains unchanged
+    displayAfter(newR1, r2, newR1);
 }
 
 
+// ================================
 // SHIFT LEFT OPERATION
+// R1 ← R1 << 1
+// ================================
+
 function shiftLeft() {
 
     let r1 = getR1();
@@ -110,15 +139,19 @@ function shiftLeft() {
     document.getElementById("operation-name").textContent =
         "SHIFT LEFT Operation";
 
-    r1 = (r1 << 1) & 255;
+    // Shift R1 left by one bit
+    let newR1 = (r1 << 1) & 255;
 
-    document.getElementById("r1").value = r1;
-
-    displayAfter(r1, r2, r1);
+    // Input R1 remains unchanged
+    displayAfter(newR1, r2, newR1);
 }
 
 
+// ================================
 // SHIFT RIGHT OPERATION
+// R1 ← R1 >> 1
+// ================================
+
 function shiftRight() {
 
     let r1 = getR1();
@@ -129,15 +162,19 @@ function shiftRight() {
     document.getElementById("operation-name").textContent =
         "SHIFT RIGHT Operation";
 
-    r1 = r1 >> 1;
+    // Shift R1 right by one bit
+    let newR1 = r1 >> 1;
 
-    document.getElementById("r1").value = r1;
-
-    displayAfter(r1, r2, r1);
+    // Input R1 remains unchanged
+    displayAfter(newR1, r2, newR1);
 }
 
 
+// ================================
 // ADD OPERATION
+// Result ← R1 + R2
+// ================================
+
 function addRegisters() {
 
     let r1 = getR1();
@@ -148,47 +185,43 @@ function addRegisters() {
     document.getElementById("operation-name").textContent =
         "ADD Operation";
 
+    // Add both registers
     let result = (r1 + r2) & 255;
 
+    // Registers remain unchanged
     displayAfter(r1, r2, result);
 }
 
 
+// ================================
 // SUBTRACT OPERATION
+// Result ← R1 - R2
+// ================================
+
 function subtractRegisters() {
 
-    let r1 = parseInt(document.getElementById("r1").value);
-    let r2 = parseInt(document.getElementById("r2").value);
+    let r1 = getR1();
+    let r2 = getR2();
 
-    // Store values before operation
-    let beforeR1 = r1;
-    let beforeR2 = r2;
+    displayBefore(r1, r2);
 
-    // Perform subtraction
-    let result = r1 - r2;
-
-    // Convert result to 8-bit binary using two's complement
-    let binaryResult = (result & 255).toString(2).padStart(8, "0");
-
-    // Display operation name
-    document.getElementById("operation-name").innerText =
+    document.getElementById("operation-name").textContent =
         "SUBTRACT Operation";
 
-    // Display values before operation
-    document.getElementById("before-r1").innerText =
-        `R1 = ${beforeR1.toString(2).padStart(8, "0")} (${beforeR1})`;
+    // Calculate actual signed result
+    let result = r1 - r2;
 
-    document.getElementById("before-r2").innerText =
-        `R2 = ${beforeR2.toString(2).padStart(8, "0")} (${beforeR2})`;
+    // Convert to 8-bit two's complement binary
+    let binaryResult = toBinary(result);
 
-    // Display values after operation
-    document.getElementById("after-r1").innerText =
-        `R1 = ${r1.toString(2).padStart(8, "0")} (${r1})`;
+    // Registers remain unchanged
+    document.getElementById("after-r1").textContent =
+        "R1 = " + toBinary(r1) + " (" + r1 + ")";
 
-    document.getElementById("after-r2").innerText =
-        `R2 = ${r2.toString(2).padStart(8, "0")} (${r2})`;
+    document.getElementById("after-r2").textContent =
+        "R2 = " + toBinary(r2) + " (" + r2 + ")";
 
-    // Display correct signed decimal result
-    document.getElementById("result").innerText =
-        `Result = ${binaryResult} (${result})`;
+    // Show signed decimal result
+    document.getElementById("result").textContent =
+        "Result = " + binaryResult + " (" + result + ")";
 }
